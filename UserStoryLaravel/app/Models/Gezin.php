@@ -8,14 +8,16 @@
         protected $table = 'gezin';
         public $timestamps = false;
 
-        public function contact()
+        public function personen()
         {
-            return $this->belongsToMany(Contact::class, 'ContactPerGezin', 'gezin_id', 'contact_id', 'Id');
+            return $this->hasMany(Persoon::class, 'gezin_id');
         }
-
-        public function Persoon()
+    
+        public function contacten()
         {
-            return $this->hasOne(Persoon::class, 'gezin_id', 'Id');
+            return $this->belongsToMany(Contact::class, 'ContactPerGezin', 'gezin_id', 'contact_id')
+                ->withPivot('Opmerking')
+                ->withTimestamps();
         }
 
     }

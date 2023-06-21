@@ -3,7 +3,11 @@
 @section('content')
     <div class="container">
         <h1>Klant Details {{ $klant->Voornaam . ' ' . $klant->Tussenvoegsel . ' ' . $klant->Achternaam }}</h1>
-
+        @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @elseif (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif  
         <table class="table table-bordered">
             <tbody>
                 <tr>

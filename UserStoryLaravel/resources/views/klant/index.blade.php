@@ -3,13 +3,19 @@
 @section('content')
 <div class="container">
     <h1>Overzicht Klanten</h1>
-    @if (session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-    @elseif (session('error'))
-    <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif  
-<!-- Existing code for customer records -->
 
+<!-- Existing code for customer records -->
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
 <div class="d-flex justify-content-end mt-3">
     <form action="{{ route('klant.index') }}" method="GET" class="form-inline">
         <div class="d-flex align-items-center">
