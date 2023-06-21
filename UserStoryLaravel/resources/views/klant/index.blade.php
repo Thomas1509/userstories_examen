@@ -50,8 +50,7 @@
                 <td>{{ $klant->IsVertegenwoordiger ? 'Ja' : 'Nee' }}</td>
                 <td>{{ $klant->Email }}</td>
                 <td>{{ $klant->Mobiel }}</td>
-                <td>{{ $klant->Straat }}
-                <td>{{ $klant->Huisnummer }}{{ $klant->Toevoeging ? ' ' . $klant->Toevoeging : '' }}</td>
+                <td>{{ $klant->Straat . ' ' . $klant->Huisnummer }}{{ $klant->Toevoeging ? ' ' . $klant->Toevoeging : '' }}</td>
                 <td>{{ $klant->Woonplaats }}</td>
                 <td><a href="{{ route('klant.show', ['id' => $klant->Id]) }}" class="btn btn-primary">Show</a></td>
             </tr>
