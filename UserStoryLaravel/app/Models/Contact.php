@@ -5,13 +5,26 @@
 
     class Contact extends Model
     {
-        protected $table = 'contact';
+        protected $table = 'Contact';
         public $timestamps = false;
-
-        public function gezin()
+        
+        public function gezinnen()
         {
-            return $this->belongsToMany(Gezin::class, 'ContactPerGezin', 'contact_id', 'gezin_id');
+            return $this->belongsToMany(Gezin::class, 'ContactPerGezin', 'contact_id', 'gezin_id')
+                ->withPivot('Opmerking')
+                ->withTimestamps();
         }
-
+        protected $fillable = [
+            'Straat',
+            'Huisnummer',
+            'Toevoeging',
+            'Postcode',
+            'Woonplaats',
+            'Email',
+            'Mobiel',
+            'DatumAangemaakt',
+            'DatumGewijzigd'
+        ];
     }
+    
 ?>

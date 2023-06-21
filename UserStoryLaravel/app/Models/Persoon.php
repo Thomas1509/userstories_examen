@@ -5,12 +5,23 @@
 
     class Persoon extends Model
     {
-        protected $table = 'persoon';
+        protected $table = 'Persoon';
         public $timestamps = false;
-        public function contact()
+    
+        public function gezin()
         {
-            return $this->hasOne(Contact::class, 'contact_id');
+            return $this->belongsTo(Gezin::class, 'gezin_id');
         }
-
+        protected $fillable = [
+            'Voornaam',
+            'Tussenvoegsel',
+            'Achternaam',
+            'Geboortedatum',
+            'TypePersoon',
+            'IsVertegenwoordiger',
+            'DatumAangemaakt',
+            'DatumGewijzigd'
+        ];
     }
+    
 ?>

@@ -3,7 +3,11 @@
 @section('content')
     <div class="container">
         <h1>Klant Details {{ $klant->Voornaam . ' ' . $klant->Tussenvoegsel . ' ' . $klant->Achternaam }}</h1>
-
+        @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+        @elseif (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif  
         <table class="table table-bordered">
             <tbody>
                 <tr>
@@ -20,7 +24,7 @@
                 </tr>
                 <tr>
                     <th>Geboortedatum:</th>
-                    <td>{{ $klant->Geboortedatum }}</td>
+                    <td>{{ date('Y-m-d', strtotime($klant->Geboortedatum)) }}</td>
                 </tr>
                 <tr>
                     <th>Type Persoon:</th>

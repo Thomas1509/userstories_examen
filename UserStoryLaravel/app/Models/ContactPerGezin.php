@@ -5,8 +5,17 @@
 
     class ContactPerGezin extends Model
     {
-        protected $table = 'contactpergezin';
+        protected $table = 'ContactPerGezin';
         public $timestamps = false;
-
+    
+        public function gezin()
+        {
+            return $this->belongsTo(Gezin::class, 'gezin_id');
+        }
+    
+        public function contact()
+        {
+            return $this->belongsTo(Contact::class, 'contact_id');
+        }
     }
-?>
+    
