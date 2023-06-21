@@ -7,16 +7,10 @@
     {
         protected $table = 'persoon';
         public $timestamps = false;
-
-        // public function contactpersonen()
-        // {
-        //     return $this->belongsToMany(ContactPersoon::class, 'ContactPersoonPerLeverancier', 'leverancier_id', 'contactpersoon_id', 'Id');
-        // }
-
-        // public function levering()
-        // {
-        //     return $this->hasOne(Levering::class, 'leverancier_id', 'Id');
-        // }
+        public function contact()
+        {
+            return $this->hasOne(Contact::class, 'contact_id');
+        }
 
     }
 ?>
