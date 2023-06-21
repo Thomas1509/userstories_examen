@@ -24,7 +24,7 @@
                 </tr>
                 <tr>
                     <th>Geboortedatum:</th>
-                    <td>{{ $klant->Geboortedatum }}</td>
+                    <td>{{ date('Y-m-d', strtotime($klant->Geboortedatum)) }}</td>
                 </tr>
                 <tr>
                     <th>Type Persoon:</th>

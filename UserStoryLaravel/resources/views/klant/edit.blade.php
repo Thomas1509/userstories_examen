@@ -4,11 +4,11 @@
 
 @section('content')
 @if (session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-    @elseif (session('error'))
-    <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif  
-                    <div class="container">
+<div class="alert alert-success">{{ session('success') }}</div>
+@elseif (session('error'))
+<div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -67,15 +67,19 @@
                             </div>
                         </div>
 
-                    <div class="form-group row">
-                        <label for="IsVertegenwoordiger" class="col-md-4 col-form-label text-md-right">IsVertegenwoordiger</label>
-                        <div class="col-md-6">
-                            <select id="IsVertegenwoordiger" class="form-control" name="IsVertegenwoordiger" required>
-                                <option value="0" {{ $klant->IsVertegenwoordiger == 0 ? 'selected' : '' }}>0</option>
-                                <option value="1" {{ $klant->IsVertegenwoordiger == 1 ? 'selected' : '' }}>1</option>
-                            </select>
+                        <div class="form-group row">
+                            <label for="IsVertegenwoordiger"
+                                class="col-md-4 col-form-label text-md-right">IsVertegenwoordiger</label>
+                            <div class="col-md-6">
+                                <select id="IsVertegenwoordiger" class="form-control" name="IsVertegenwoordiger"
+                                    required>
+                                    <option value="0" {{ $klant->IsVertegenwoordiger == 0 ? 'selected' : '' }}>0
+                                    </option>
+                                    <option value="1" {{ $klant->IsVertegenwoordiger == 1 ? 'selected' : '' }}>1
+                                    </option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
 
                         <div class="form-group row">
@@ -87,49 +91,56 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="huisnummer" class="col-md-4 col-form-label text-md-right">Huisnummer</label>
+                            <label for="Huisnummer" class="col-md-4 col-form-label text-md-right">Huisnummer</label>
                             <div class="col-md-6">
-                                <input id="huisnummer" type="text" class="form-control" name="huisnummer"
+                                <input id="Huisnummer" type="text" class="form-control" name="Huisnummer"
                                     value="{{ $klant->Huisnummer }}" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="toevoeging" class="col-md-4 col-form-label text-md-right">Toevoeging</label>
+                            <label for="Toevoeging" class="col-md-4 col-form-label text-md-right">Toevoeging</label>
                             <div class="col-md-6">
-                                <input id="toevoeging" type="text" class="form-control" name="toevoeging"
+                                <input id="Toevoeging" type="text" class="form-control" name="Toevoeging"
                                     value="{{ $klant->Toevoeging }}">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="postcode" class="col-md-4 col-form-label text-md-right">Postcode</label>
+                            <label for="Postcode" class="col-md-4 col-form-label text-md-right">Postcode</label>
                             <div class="col-md-6">
-                                <input id="postcode" type="text" class="form-control" name="postcode"
+                                <input id="Postcode" type="text" class="form-control" name="Postcode"
                                     value="{{ $klant->Postcode }}" required>
+                                @error('Postcode')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
 
+
+
                         <div class="form-group row">
-                            <label for="woonplaats" class="col-md-4 col-form-label text-md-right">Woonplaats</label>
+                            <label for="Woonplaats" class="col-md-4 col-form-label text-md-right">Woonplaats</label>
                             <div class="col-md-6">
-                                <input id="woonplaats" type="text" class="form-control" name="woonplaats"
+                                <input id="Woonplaats" type="text" class="form-control" name="Woonplaats"
                                     value="{{ $klant->Woonplaats }}" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
+                            <label for="Email" class="col-md-4 col-form-label text-md-right">Email</label>
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email"
+                                <input id="Email" type="Email" class="form-control" name="Email"
                                     value="{{ $klant->Email }}" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="mobiel" class="col-md-4 col-form-label text-md-right">Mobiel</label>
+                            <label for="Mobiel" class="col-md-4 col-form-label text-md-right">Mobiel</label>
                             <div class="col-md-6">
-                                <input id="mobiel" type="text" class="form-control" name="mobiel"
+                                <input id="Mobiel" type="text" class="form-control" name="Mobiel"
                                     value="{{ $klant->Mobiel }}" required>
                             </div>
                         </div>

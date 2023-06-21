@@ -137,59 +137,87 @@ class KlantController extends Controller
         return view('klant.edit', compact('klant'));
     }
     
-    
-
-
     public function update(Request $request, $id)
     {
         try {
-        // Retrieve the input data from the request
-        $voornaam = $request->input('voornaam');
-        $tussenvoegsel = $request->input('tussenvoegsel');
-        $achternaam = $request->input('achternaam');
-        $geboortedatum = $request->input('geboortedatum');
-        $typePersoon = $request->input('TypePersoon');
-        $isVertegenwoordiger = $request->input('IsVertegenwoordiger');
-        $straat = $request->input('Straat');
-        $huisnummer = $request->input('huisnummer');
-        $toevoeging = $request->input('toevoeging');
-        $postcode = $request->input('postcode');
-        $woonplaats = $request->input('woonplaats');
-        $email = $request->input('email');
-        $mobiel = $request->input('mobiel');
-        
-        // Update the customer in the database
-        DB::table('Persoon')
-            ->where('Id', $id)
-            ->update([
-                'Voornaam' => $voornaam,
-                'Tussenvoegsel' => $tussenvoegsel,
-                'Achternaam' => $achternaam,
-                'Geboortedatum' => $geboortedatum,
-                'TypePersoon' => $typePersoon,
-                'IsVertegenwoordiger' => $isVertegenwoordiger,
-            ]);
+            // Retrieve the input data from the request
+            $voornaam = $request->input('voornaam');
+            $tussenvoegsel = $request->input('tussenvoegsel');
+            $achternaam = $request->input('achternaam');
+            $geboortedatum = $request->input('geboortedatum');
+            $typePersoon = $request->input('TypePersoon');
+            $isVertegenwoordiger = $request->input('IsVertegenwoordiger');
+            $straat = $request->input('Straat');
+            $huisnummer = $request->input('Huisnummer');
+            $toevoeging = $request->input('Toevoeging');
+            $postcode = $request->input('Postcode');
+            $woonplaats = $request->input('Woonplaats');
+            $email = $request->input('Email');
+            $mobiel = $request->input('Mobiel');
             
-        DB::table('Contact')
-            ->join('ContactPerGezin', 'ContactPerGezin.contact_id', '=', 'Contact.Id')
-            ->where('ContactPerGezin.gezin_id', $id)
-            ->update([
-                'Straat' => $straat,
-                'Huisnummer' => $huisnummer,
-                'Toevoeging' => $toevoeging,
-                'Postcode' => $postcode,
-                'Woonplaats' => $woonplaats,
-                'Email' => $email,
-                'Mobiel' => $mobiel,
-            ]);
+            // Validate the selected postcode
+            $existingPostcode = DB::table('Contact')
+                ->where('Postcode', $postcode)
+                ->exists();
+    
+            if (!$existingPostcode) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'Invalid Postcode. Please select a valid Postcode.')
+                    ->withInput();
+            }
+                // Update the customer in the database
+                DB::table('Persoon')
+                    ->where('Id', $id)
+                    ->update([
+                        'Voornaam' => $voornaam,
+                        'Tussenvoegsel' => $tussenvoegsel,
+                        'Achternaam' => $achternaam,
+                        'Geboortedatum' => $geboortedatum,
+                        'TypePersoon' => $typePersoon,
+                        'IsVertegenwoordiger' => $isVertegenwoordiger,
+                    ]);
+            
+                $contactPerGezin = DB::table('ContactPerGezin')
+                    ->where('gezin_id', $id)
+                    ->first();
+            
 
-        // Return a response indicating the success of the update
-        return redirect()->route('klant.show', $id)->with('success', 'Klant updated successfully.');
-    } catch (ModelNotFoundException $e) {
-        return redirect()->back()->with('error', 'Klant not found.');
-    } catch (QueryException $e) {
-        return redirect()->back()->with('error', 'An error occurred while updating the klant.');
+                if ($contactPerGezin) {
+                    $contactId = $contactPerGezin->contact_id;
+            
+                
+                    DB::table('Contact')
+                        ->where('Id', $contactId)
+                        ->update([
+                            'Straat' => $straat,
+                            'Huisnummer' => $huisnummer,
+                            'Toevoeging' => $toevoeging,
+                            'Postcode' => $postcode,
+                            'Woonplaats' => $woonplaats,
+                            'Email' => $email,
+                            'Mobiel' => $mobiel,
+                        ]);
+                    // Return a response indicating the success of the update
+                    return redirect()
+                        ->route('klant.show', $id)
+                        ->with('success', 'Klant updated successfully.');
+                } else {
+                    return redirect()
+                        ->back()
+                        ->with('error', 'An error occurred while updating the contact information.');
+                }
+            } catch (\Exception $e) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'An error occurred while updating the klant: ' . $e->getMessage());
+            }
+            
+            
     }
+    
+    
+    
+    
 
-    }
 }
