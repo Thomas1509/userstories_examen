@@ -32,10 +32,11 @@ class KlantController extends Controller
     
             $klanten = $klanten->get();
     
-            $postcodes = Contact::select('Postcode')->distinct()->pluck('Postcode');
+            $postcodes = Contact::distinct('Postcode')->pluck('Postcode');
     
-            if ($postcode && $klanten->isEmpty()) {
-                return back()->withErrors('Er zijn geen klanten bekend die de geselecteerde postcode hebben.');
+            if ($klanten->isEmpty()) {
+                $errorMessage = "Er zijn geen klanten bekend die de geselecteerde postcode hebben.";
+                return view('klant.index', compact('klanten', 'postcodes', 'errorMessage'));
             }
     
             return view('klant.index', compact('klanten', 'postcodes'));
@@ -43,5 +44,7 @@ class KlantController extends Controller
             return redirect()->back()->with('error', 'An error occurred while fetching the klanten.');
         }
     }
+    
+
     
 }
