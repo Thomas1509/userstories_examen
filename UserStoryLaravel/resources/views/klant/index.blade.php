@@ -52,7 +52,7 @@
                 <td>{{ $klant->Mobiel }}</td>
                 <td>{{ $klant->Straat . ' ' . $klant->Huisnummer }}{{ $klant->Toevoeging ? ' ' . $klant->Toevoeging : '' }}</td>
                 <td>{{ $klant->Woonplaats }}</td>
-                <td><a href="{{ route('klant.show', ['id' => $klant->Id]) }}" class="btn btn-primary">Show</a></td>
+                <td><a href="{{ route('klant.show', ['id' => $klant->Id]) }}" class="btn btn-primary">Details</a></td>
             </tr>
             @endforeach
             @if(isset($errorMessage))

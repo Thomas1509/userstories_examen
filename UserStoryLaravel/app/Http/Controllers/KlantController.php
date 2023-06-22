@@ -103,7 +103,7 @@ class KlantController extends Controller
             return view('klant.show', compact('klant'));
         } catch (ModelNotFoundException $e) {
             // Handle the case where the customer was not found
-            return redirect()->back()->with('error', 'Klant not found.');
+            return redirect()->back()->with('error', 'Klant niet gevonden.');
         } catch (QueryException $e) {
             // Handle the case where an error occurred while fetching the customer
             return redirect()->back()->with('error', 'An error occurred while fetching the klant.');
@@ -155,38 +155,42 @@ class KlantController extends Controller
             $email = $request->input('Email');
             $mobiel = $request->input('Mobiel');
             
-            // Validate the selected postcode
-            $existingPostcode = DB::table('Contact')
-                ->where('Postcode', $postcode)
-                ->exists();
-    
-            if (!$existingPostcode) {
+            // Array of all existing postcodes
+            $existingPostcode = [
+                '5271TH',
+                '5271TJ',
+                '5271ZE',
+                '5271ZH',
+            ];
+            
+            if (!in_array($postcode, $existingPostcode)) {
                 return redirect()
                     ->back()
-                    ->with('error', 'Invalid Postcode. Please select a valid Postcode.')
+                    ->with('error', 'Postcode is niet geldig. Kies een geldige postcode.')
                     ->withInput();
             }
                 // Update the customer in the database
-                DB::table('Persoon')
-                    ->where('Id', $id)
-                    ->update([
-                        'Voornaam' => $voornaam,
-                        'Tussenvoegsel' => $tussenvoegsel,
-                        'Achternaam' => $achternaam,
-                        'Geboortedatum' => $geboortedatum,
-                        'TypePersoon' => $typePersoon,
-                        'IsVertegenwoordiger' => $isVertegenwoordiger,
-                    ]);
-            
-                $contactPerGezin = DB::table('ContactPerGezin')
-                    ->where('gezin_id', $id)
-                    ->first();
-            
+            DB::table('Persoon')
+                ->where('Id', $id)
+                ->update([
+                    'Voornaam' => $voornaam,
+                    'Tussenvoegsel' => $tussenvoegsel,
+                    'Achternaam' => $achternaam,
+                    'Geboortedatum' => $geboortedatum,
+                    'TypePersoon' => $typePersoon,
+                    'IsVertegenwoordiger' => $isVertegenwoordiger,
+                ]);
 
+                    // Logica om contact gegevens te wijzigen 
+                $contactPerGezin = DB::table('ContactPerGezin')
+                ->join('Persoon', 'Persoon.gezin_id', '=', 'ContactPerGezin.gezin_id')
+                ->where('Persoon.Id', $id)
+                ->select('ContactPerGezin.contact_id')
+                ->first();
+                
                 if ($contactPerGezin) {
                     $contactId = $contactPerGezin->contact_id;
             
-                
                     DB::table('Contact')
                         ->where('Id', $contactId)
                         ->update([
@@ -201,7 +205,7 @@ class KlantController extends Controller
                     // Return a response indicating the success of the update
                     return redirect()
                         ->route('klant.show', $id)
-                        ->with('success', 'Klant updated successfully.');
+                        ->with('success', 'Klant succesvol gewijzigd.');
                 } else {
                     return redirect()
                         ->back()
@@ -212,7 +216,6 @@ class KlantController extends Controller
                     ->back()
                     ->with('error', 'An error occurred while updating the klant: ' . $e->getMessage());
             }
-            
             
     }
     

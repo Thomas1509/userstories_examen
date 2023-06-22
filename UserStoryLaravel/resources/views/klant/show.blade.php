@@ -67,7 +67,7 @@
         </div>
         
 </table>
-<a href="{{ route('klant.edit', $klant->Id) }}" class="btn btn-primary mt-3">Bewerken</a>
+<a href="{{ route('klant.edit', $klant->Id) }}" class="btn btn-primary mt-3">Wijzig</a>
 
 <a href="{{ route('klant.index') }}" class="btn btn-primary mt-3">Terug</a>
 

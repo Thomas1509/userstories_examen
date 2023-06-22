@@ -73,9 +73,9 @@
                             <div class="col-md-6">
                                 <select id="IsVertegenwoordiger" class="form-control" name="IsVertegenwoordiger"
                                     required>
-                                    <option value="0" {{ $klant->IsVertegenwoordiger == 0 ? 'selected' : '' }}>0
+                                    <option value="0" {{ $klant->IsVertegenwoordiger == 0 ? 'selected' : '' }}>Nee
                                     </option>
-                                    <option value="1" {{ $klant->IsVertegenwoordiger == 1 ? 'selected' : '' }}>1
+                                    <option value="1" {{ $klant->IsVertegenwoordiger == 1 ? 'selected' : '' }}>Ja
                                     </option>
                                 </select>
                             </div>
@@ -147,8 +147,8 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                                <a href="{{ route('klant.index') }}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Wijzig Klant Details</button>
+                                <a href="{{ route('klant.index') }}" class="btn btn-secondary">Terug</a>
                             </div>
                         </div>
                     </form>
